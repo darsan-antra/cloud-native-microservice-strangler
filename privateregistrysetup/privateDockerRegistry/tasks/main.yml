@@ -29,5 +29,6 @@
     command: docker pull localhost:5000/my-ubuntu
     register: ubuntu_pulled_from_registry
 
-  
+
+
 ...
