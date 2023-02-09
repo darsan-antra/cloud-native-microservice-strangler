@@ -1,0 +1,32 @@
+---
+#tasks file for privateDockerRegistry
+
+  - name: Start the Docker registry
+    command: docker run -d -p 5000:5000 --restart=always --name registry registry:2
+    register: registry_started
+
+  - name: Pull Ubuntu image
+    command: docker pull ubuntu:16.04
+    register: ubuntu_pulled
+
+  - name: Tag the Ubuntu image
+    command: docker tag ubuntu:16.04 localhost:5000/my-ubuntu
+    register: ubuntu_tagged
+
+  - name: Push the tagged Ubuntu image to the local registry
+    command: docker push localhost:5000/my-ubuntu
+    register: ubuntu_pushed
+
+  - name: Remove the original Ubuntu image
+    command: docker image remove ubuntu:16.04
+    register: ubuntu_original_removed
+
+  - name: Remove the tagged Ubuntu image from the local registry
+    command: docker image remove localhost:5000/my-ubuntu
+    register: ubuntu_tagged_removed
+
+  - name: Pull the Ubuntu image from the local registry
+    command: docker pull localhost:5000/my-ubuntu
+    register: ubuntu_pulled_from_registry
+
+...

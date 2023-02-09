@@ -1,0 +1,9 @@
+---
+# handlers file for privateDockerRegistry
+- name: restart firewall
+  service:
+    name: firewalld
+    state: restarted
+
+...
+
